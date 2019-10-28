@@ -1,0 +1,119 @@
+﻿@model IEnumerable<edudep.Models.References.SpecialityGroup>
+
+@{
+    ViewData["Title"] = "УГС";
+}
+
+<h4>Укрупненные группы специальностей и направлений подготовки</h4>
+
+<div class="edudepreference">
+    <div class="row">
+        <div class="col col-md-12">
+
+            <div id="SpecialityGroup_Table_Toolbar">
+                <div class="form-inline" role="form">
+                    <div class="btn-group" role="group" aria-label="Кнопки справочника">
+                        <button id="SpecialityGroup_BtnAdd" class="btn btn-success" title="Добавить"><i class="fa fa-plus"></i></button>
+                        <button id="SpecialityGroup_BtnEdt" class="btn btn-primary" title="Редактировать"><i class="fa fa-pen"></i></button>
+                        <button id="SpecialityGroup_BtnRem" class="btn btn-danger" title="Удалить"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <table id="SpecialityGroup_Table"
+                   data-locale="ru-RU"
+                   data-unique-id="id"
+                   data-id-field="id"
+                   data-select-item-name="id"
+                   data-click-to-select="true"
+                   data-sort-name="code"
+                   data-sort-order="asc"
+                   data-classes="table table-bordered table-striped table-sm"
+                   data-thead-classes="thead-dark"
+                   data-toggle="table"
+                   data-side-pagination="server"
+                   data-url="/SpecialityGroups/GetData"
+                   data-pagination="true"
+                   data-pagination-loop="false"
+                   data-search="true"
+                   data-search-on-enter-key="true"
+                   data-height="460"
+                   data-toolbar="#SpecialityGroup_Table_Toolbar"
+                   data-undefined-text=""
+                   data-show-refresh="true"
+                   data-show-toggle="false"
+                   data-show-fullscreen="false"
+                   data-show-pagination-switch="true"
+                   data-show-columns="true"
+                   data-page-size="20"
+                   data-page-list="[5,10,20,50,Все]">
+                <thead>
+                    <tr>
+                        <th data-radio="true" class="table-indicator" data-visible="true"></th>
+                        <th data-field="code" data-sortable="true" data-halign="center" data-align="left">Шифр</th>
+                        <th data-field="name" data-sortable="true" data-halign="center" data-align="left">Название</th>
+                        <th data-field="shortname" data-sortable="true" data-halign="center" data-align="left">Сокращение</th>
+                        <th data-field="id" data-visible="false" data-halign="center" data-align="left">Идентификатор</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+    <div id="SpecialityGroup_Modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="SpecialityGroup_ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 id="SpecialityGroup_ModalLabel" class="modal-title">Группа специальностей</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <input id="SpecialityGroup_Modal_Id" type="text" class="form-control" hidden />
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form id="SpecialityGroup_Modal_Form">
+                            <div class="form-group row">
+                                <label for="SpecialityGroup_Modal_Code" class="col-sm-3 col-form-label">Шифр</label>
+                                <div class="col col-sm-9">
+                                    <input id="SpecialityGroup_Modal_Code" name="SpecialityGroup_Modal_Code" type="text" required pattern="[0-9]{2}\.[0-9]{2}\.[0-9]{2}" class="form-control" aria-describedby="SpecialityGroup_Modal_Code_HelpBlock" />
+                                    <small id="SpecialityGroup_Modal_Code_HelpBlock" class="form-text text-muted">
+                                        Шифр группы, в формате ХХ.ХХ.ХХ
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="SpecialityGroup_Modal_Name" class="col-sm-3 col-form-label">Название</label>
+                                <div class="col col-sm-9">
+                                    <input id="SpecialityGroup_Modal_Name" name="SpecialityGroup_Modal_Name" type="text" required maxlength="250" class="form-control" aria-describedby="SpecialityGroup_Modal_Name_HelpBlock" />
+                                    <small id="SpecialityGroup_Modal_Name_HelpBlock" class="form-text text-muted">
+                                        Название группы, от 1 до 250 символов.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="SpecialityGroup_Modal_ShortName" class="col-sm-3 col-form-label">Аббревиатура</label>
+                                <div class="col col-sm-9">
+                                    <input id="SpecialityGroup_Modal_ShortName" name="SpecialityGroup_Modal_ShortName" type="text" required maxlength="15" class="form-control" aria-describedby="SpecialityGroup_Modal_ShortName_HelpBlock" />
+                                    <small id="SpecialityGroup_Modal_ShortName_HelpBlock" class="form-text text-muted">
+                                        Сокращение, от 1 до 15 символов.
+                                    </small>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="submit" class="btn btn-primary" id="SpecialityGroup_ModalOk">OK</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript" src="~/js/references/specialitygroups.js"></script>
+}

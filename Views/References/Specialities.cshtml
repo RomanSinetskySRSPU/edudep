@@ -1,0 +1,133 @@
+﻿@model IEnumerable<edudep.Models.References.Speciality>
+
+@{
+    ViewData["Title"] = "Направления";
+}
+
+<h4>Специальности и направления подготовки</h4>
+
+<div class="reference-single-entity">
+    <div class="row">
+        <div class="col col-md-12">
+
+            <div id="table-toolbar">
+                <div class="form-inline" role="form">
+                    <div class="btn-group" role="group" aria-label="Кнопки справочника">
+                        <button class="btn btn-success reference-btn-add" title="Добавить" data-url="/Speciality/AddOrEditData"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-primary reference-btn-edit" title="Редактировать" data-url="/Speciality/AddOrEditData"><i class="fa fa-pen"></i></button>
+                        <button class="btn btn-danger reference-btn-remove" title="Удалить" data-url="/Speciality/RemoveData"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <table class="reference-data-table"
+                   data-toolbar="#table-toolbar"
+                   data-locale="ru-RU"
+                   data-unique-id="id"
+                   data-id-field="id"
+                   data-select-item-name="id"
+                   data-click-to-select="true"
+                   data-sort-name="code"
+                   data-sort-order="asc"
+                   data-classes="table table-bordered table-striped table-sm"
+                   data-thead-classes="thead-dark"
+                   data-toggle="table"
+                   data-side-pagination="server"
+                   data-url="/Speciality/GetData"
+                   data-search="true"
+                   data-search-on-enter-key="true"
+                   data-height="460"
+                   data-undefined-text=""
+                   data-show-refresh="true"
+                   data-show-toggle="false"
+                   data-show-fullscreen="false"
+                   data-show-columns="true"
+                   data-show-pagination-switch="true"
+                   data-pagination="true"
+                   data-pagination-loop="false"
+                   data-page-size="20"
+                   data-page-list="[5,10,20,50,Все]">
+                <thead>
+                    <tr>
+                        <th data-radio="true" class="table-indicator" data-visible="true"></th>
+                        <th data-field="code" data-sortable="true" data-halign="center" data-align="left" data-width="20%">Шифр</th>
+                        <th data-field="name" data-sortable="true" data-halign="center" data-align="left">Название</th>
+                        <th data-field="shortname" data-sortable="true" data-halign="center" data-align="left">Сокращение</th>
+                        <th data-field="specialitygroup" data-sortable="true" data-halign="center" data-align="left">УГС</th>
+                        <th data-field="testbool" data-sortable="true" data-formatter="ColFmtBoolSimple" data-halign="center" data-align="center" data-width="10%">Активен</th>
+                        <th data-field="testdate" data-sortable="true" data-formatter="ColFmtDateDDMMYYYYTimeHHMMSS" data-halign="center" data-align="">Дата</th>
+                        <th data-field="id" data-sortable="true" data-visible="false" data-halign="left" data-align="center">Идентификатор</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade reference-modal-dlg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title">Cпециальности и направления подготовки</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body container-fluid">
+                    <form>
+                        <input id="i1" data-field="id" type="text" class="form-control" hidden />
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Шифр</label>
+                            <div class="col col-sm-9">
+                                <input data-field="code" name="code" type="text" required pattern="[0-9]{2}\.[0-9]{2}\.[0-9]{2}" class="form-control" />
+                                <small class="form-text text-muted">Шифр специальности или направления, в формате ХХ.ХХ.ХХ</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Название</label>
+                            <div class="col col-sm-9">
+                                <input data-field="name" name="name" type="text" required maxlength="250" class="form-control" />
+                                <small class="form-text text-muted"> Название специальности или направления, от 1 до 250 символов.</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Аббревиатура</label>
+                            <div class="col col-sm-9">
+                                <input data-field="shortname" name="shortname" type="text" required maxlength="15" class="form-control" />
+                                <small class="form-text text-muted">Сокращение специальности или направления, от 1 до 15 символов.</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">УГС</label>
+                            <div class="col col-sm-9">
+                                <select data-field="specialitygroup" data-field-id="specialitygroupid" data-url="/Speciality/GetSpecialityGroups" name="group" type="text" required class="form-control"></select>
+                                <small class="form-text text-muted">УГС специальности или направления, выбор обязателен.</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Активен</label>
+                            <div class="col col-sm-9">
+                                <input data-field="testbool" name="testbool" type="checkbox" class="form-control multi-switch" initial-value="2" unchecked-value="2" checked-value="1" value="2"  />
+                                <small class="form-text text-muted">Активность, вкл/выкл</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Дата</label>
+                            <div class="col col-sm-9">
+                                <input data-field="testdate" name="testdat" control="datetimepicker" class="form-control" />
+                                <small class="form-text text-muted">Дата, дд.мм.гггг чч:мм:сс</small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="submit" class="btn btn-primary reference-btn-ok">OK</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript" src="~/js/references/reference-base.js"></script>
+    <script type="text/javascript" src="~/js/references/table-column-formatters.js"></script>
+}
